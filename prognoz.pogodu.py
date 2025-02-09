@@ -92,7 +92,25 @@ class Bullet:
 
 
 
+class Enemy:
+        def __init__(self, x, y, width, height, speed, skin):
+            self.texture = pygame.image.load(skin)
+            self.texture = pygame.transform.scale(self.texture, [width, height])
+            self.texture_right = self.texture
+            self.texture_left = pygame.transform.flip(self.texture, True, False)
+            self.hitbox = self.texture.get_rect()
+            self.speed = speed
+            self.hitbox.x = x
+            self.hitbox.y = y
 
+
+
+        def draw(self, window):
+            window.blit(self.texture, self.hitbox)
+
+
+        def move(self):
+            self.hitbox.x += self.speed
 
 
 
@@ -101,12 +119,23 @@ def game():
     pygame.init()
     window = pygame.display.set_mode([700, 500])
     fps = pygame.time.Clock()
-    player = Player(1, 65, 85, 147, 300, "Знімок_екрана_2025-01-26_142901-removebg-preview.png")
-
+    player = Player(5, 65, 85, 147, 300, "Знімок_екрана_2025-01-26_142901-removebg-preview.png")
 
     background = pygame.image.load("ORS97Z0.jpg")
     background = pygame.transform.scale(background, [700, 500])
     game = True
+
+    num_enemies = 5
+    enemies = []
+
+    for i in range(5):
+        enemies.append(Enemy(random.randint(-500, 0), 300, 65, 75, 4,"pngtree-green-robber-clip-art-png-image_2972817-removebg-preview.png" ))
+
+    if self.x > screen_width or self.y > screen_height or self.x < 0 or self.y < 0:
+        # Якщо вийшов — задаємо нові випадкові координати
+        self.x = random.randint(0, screen_width - self.width)
+        self.y = random.randint(0, screen_height - self.height)
+
 
 
 
@@ -132,7 +161,9 @@ def game():
         player.move()
         player.draw(window)
 
-
+        for enemy in enemies:
+            enemy.draw(window)
+            enemy.move()
 
 
 
@@ -144,6 +175,6 @@ def game():
 
 
 
-    fps.tick(60)
+        fps.tick(60)
 
 game()
