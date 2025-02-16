@@ -11,7 +11,7 @@ import pygame
 
 
 class Player:
-    def __init__(self, speed, width, height, x, y, skin):
+    def __init__(self, speed, width, height, x, y, skin, health=3):
         self.texture = pygame.image.load(skin)
         self.texture = pygame.transform.scale(self.texture, [width, height])
         self.texture_right= self.texture
@@ -22,6 +22,7 @@ class Player:
         self.speed = speed
         self.bullets = []
         self.last_shoot = 0
+        self.health = health
 
     def draw(self, window):
         window.blit(self.texture, self.hitbox)
@@ -38,6 +39,11 @@ class Player:
             self.hitbox.x += self.speed
             self.texture = self.texture_right
 
+        if keys[pygame.K_f]:
+            self.hitbox.y -= self.speed
+            self.texture = self.texture_right
+
+
         if keys[pygame.K_a]:
             self.hitbox.x -= self.speed
             self.texture = self.texture_left
@@ -50,7 +56,7 @@ class Player:
                 self.bullets.append(Bullet("gratis-png-bala-dorada-icono-de-bala-una-bala-thumbnail-removebg-preview.png",
                                         50, 30,
                                         self.hitbox.x, self.hitbox.y,
-                                        3, self.angle))
+                                        9, self.angle))
                 self.last_shoot= time.time()
 
 
@@ -130,11 +136,8 @@ def game():
 
     for i in range(5):
         enemies.append(Enemy(random.randint(-500, 0), 300, 65, 75, 4,"pngtree-green-robber-clip-art-png-image_2972817-removebg-preview.png" ))
-
-    if self.x > screen_width or self.y > screen_height or self.x < 0 or self.y < 0:
-        # Якщо вийшов — задаємо нові випадкові координати
-        self.x = random.randint(0, screen_width - self.width)
-        self.y = random.randint(0, screen_height - self.height)
+        enemies.append(Enemy(random.randint(500, 1000), 300, 65, 75,  -4,
+                             "pngtree-green-robber-clip-art-png-image_2972817-removebg-preview.png"))
 
 
 
@@ -150,7 +153,38 @@ def game():
         window.blit(background, [0, 0])
 
 
+        for enemy in enemies:
+            if enemy.hitbox.x>1000:
+                enemy.hitbox.x = random.randint(-500, 0 )
+            if enemy.hitbox.x<-1000:
+                enemy.hitbox.x = random.randint(500, 1000 )
 
+
+
+
+
+
+
+        if enemy.hitbox.colliderect(player.hitbox):
+            player.health -= 1  # Subtract 1 from player's health when hit
+            enemy.hitbox.x = random.randint(500, 1000)  # Reset enemy position after collision
+            if player.health <= 0:
+                print("Game Over!")
+                pygame.quit()
+                return  # Exit the game if health reaches 0
+
+
+
+
+
+
+
+        for bullet in player.bullets[:]:
+            for enemy in enemies[:]:
+                if bullet.hitbox.colliderect(enemy.hitbox):
+                    player.bullets.remove(bullet)  # Remove the bullet that hit the enemy
+                    enemies.remove(enemy)  # Remove the enemy that was hit
+                    break  # Exit the loop after one collision to avoid multiple removals
 
 
         window.fill([123, 123,  123])
@@ -165,7 +199,9 @@ def game():
             enemy.draw(window)
             enemy.move()
 
-
+        font = pygame.font.Font(None, 36)
+        health_text = font.render(f"Health: {player.health}", True, (255, 200, 0))
+        window.blit(health_text, (10, 10))
 
         pygame.display.flip()
 
