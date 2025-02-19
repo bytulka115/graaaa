@@ -1,25 +1,33 @@
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
-from file.helper17 import *
+from file_helper17 import *
 def open_shop():
     window = QDialog()
     catalog = [
         {
             "name": "skin 1",
-            "kartinka": "ufo.png",
+            "kartinka": "Знімок_екрана_2025-01-26_142901-removebg-preview.png",
             "price": 200
         },
         {
             "name": "skin 2",
-            "kartinka": "rocket.png",
+            "kartinka": "Знімок_екрана_2025-02-19_202812-removebg-preview.png",
             "price": 250
         },
         {
-            "name": "skin 2",
-            "kartinka": "rocket.png",
+            "name": "skin 3",
+            "kartinka": "Знімок_екрана_2025-02-19_202925-removebg-preview.png",
             "price": 250
+
         },
-    ]
+        {
+            "name": "skin 3",
+            "kartinka": "Знімок_екрана_2025-02-19_202951-removebg-preview.png",
+            "price": 250
+
+        },
+        ]
+
     data = read_from_file()
     score_lbl = QLabel("Score: " + str(data['score']))
     main_line = QVBoxLayout()
