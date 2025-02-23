@@ -48,7 +48,8 @@ class Player:
             self.hitbox.x -= self.speed
             self.texture = self.texture_left
         if mouse[0]:
-           if time.time()-self.last_shoot >0.5:
+           data = read_from_file()
+           if time.time()-self.last_shoot >data['gun']:
                 target_x, target_y = pygame.mouse.get_pos()
                 dx = target_x - self.hitbox.centerx
                 dy = target_y - self.hitbox.centery
@@ -125,7 +126,8 @@ def game():
     pygame.init()
     window = pygame.display.set_mode([700, 500])
     fps = pygame.time.Clock()
-    player = Player(5, 65, 85, 147, 300, "Знімок_екрана_2025-01-26_142901-removebg-preview.png")
+    data = read_from_file()
+    player = Player(5, 65, 85, 147, 300, data['skin'])
 
     background = pygame.image.load("ORS97Z0.jpg")
     background = pygame.transform.scale(background, [700, 500])
