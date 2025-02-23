@@ -1,6 +1,10 @@
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import *
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import *
 from file_helper17 import *
+
+
+
+
 def open_shop():
     window = QDialog()
     catalog = [
@@ -15,18 +19,18 @@ def open_shop():
             "price": 250
         },
         {
-            "name": "skin 3",
+            "name": "skin 2",
             "kartinka": "Знімок_екрана_2025-02-19_202925-removebg-preview.png",
-            "price": 250
-
+            "price": 500
         },
         {
-            "name": "skin 3",
+            "name": "skin 2",
             "kartinka": "Знімок_екрана_2025-02-19_202951-removebg-preview.png",
-            "price": 250
-
+            "price": 500
         },
-        ]
+    ]
+
+
 
     data = read_from_file()
     score_lbl = QLabel("Score: " + str(data['score']))

@@ -3,7 +3,7 @@ import random
 import time
 
 import pygame
-
+from file_helper17 import *
 
 
 
@@ -131,7 +131,7 @@ def game():
     background = pygame.transform.scale(background, [700, 500])
     game = True
 
-    num_enemies = 5
+    num_enemies = 12
     enemies = []
 
     for i in range(5):

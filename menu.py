@@ -1,27 +1,24 @@
-
+import PyQt6
+import pygame
 from PyQt6.QtWidgets import *
-
 import main
-
-import shop
+from shop import open_shop
 
 app = QApplication([])
 window = QWidget()
 
-play = QPushButton("Грати")
-magazine = QPushButton("Магазин скінів")
-
-v1 = QVBoxLayout()
-v1.addWidget(play)
-v1.addWidget(magazine)
 
 
+play_btn = QPushButton("Грати")
+shop_btn = QPushButton("магазин")
 
+main_line = QVBoxLayout()
+main_line.addWidget(play_btn)
+main_line.addWidget(shop_btn)
 
-play.clicked.connect(main.game)
-magazine.clicked.connect(shop.open_shop)
-
-window.setLayout(v1)
+play_btn.clicked.connect(main.game)
+shop_btn.clicked.connect(open_shop)
+window.setLayout(main_line)
 window.show()
 app.exec()
 
